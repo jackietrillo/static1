@@ -42,7 +42,7 @@ const getQuote = async function () {
 
 const getMessage = async function () {
   let url = getUrl();
-  url += $("#name-input").val(); 
+  url += $("#name-input").val();
   let response = await fetch(url, {
     method: "GET",
     accept: "application/json"
