@@ -1,0 +1,15 @@
+npm commands
+npm init
+npm start
+npm install package --save
+npm run build
+
+git commands:
+git init
+git remote add origin https://github.com/jackietrillo/AdvancedJS.git
+git pull origin main
+git add .
+git commit -a -m "Updated menu and skills"
+git commit -m "commit message"
+git push origin main 
+
