@@ -13,32 +13,101 @@
     <title></title>
   </head>
   <body>
-    <h1>Hello from Static 1 site</h1>
-    <div id="joke"></div>
-    <br />
-    <div id="message"></div>
-    <input type="text" value="jackie" name="name-input" id="name-input" />
-
-    <div id="quote"></div>
-
+    <main>
+      <h1>Test Contact Page</h1>
+      <br />
+      <h2 className="section-title">
+        <span>Contact</span>
+      </h2>
+      <div className="spacer"></div>
+      <form id="theForm">
+        <div id="alert-placeholder"></div>
+        <div className="form-group">
+          <input
+            type="input"
+            className="form-control"
+            name="firstName"
+            placeholder="First Name"
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="input"
+            className="form-control"
+            name="lastName"
+            placeholder="Last Name"
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="email"
+            className="form-control"
+            name="email"
+            placeholder="Email"
+          />
+          <small className="form-text text-muted">* required</small>
+        </div>
+        <div className="form-group">
+          <textarea
+            className="form-control"
+            name="message"
+            placeholder="Message"
+            columns="20"
+            rows="8"
+          ></textarea>
+          <small className="form-text text-muted">* required</small>
+        </div>
+        <div className="float-end">
+          <button
+            id="btn-send"
+            type="text"
+            className="btn btn-primary"
+            onClick="handleSubmit(event)"
+          >
+            Send
+          </button>
+        </div>
+      </form>
+      <br />
+      <div id="messages"></div>
+    </main>
     <script>
+      $.fn.serializeObject = function () {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+          if (o[this.name]) {
+            if (!o[this.name].push) {
+              o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || "");
+          } else {
+            o[this.name] = this.value || "";
+          }
+        });
+        return o;
+      };
+
+      const handleSubmit = async function (event) {
+        event.preventDefault();
+        let data = $("#theForm").serializeObject();
+        await createMessage(data);
+      };
+
       $(document).ready(async function () {
-        // var joke = await getJoke();
-        // $("#joke").html(joke);
-
-        loadMessage();
-
-        $("#name-input").keydown((event) => {
+        loadMessages();
+        $("#btn-send").keydown((event) => {
           if (event.which == 13) {
             event.preventDefault();
-            loadMessage();
+            loadMessages();
           }
         });
       });
 
-      const loadMessage = async function () {
-        var message = await getMessage();
-        $("#message").html(message);
+      const loadMessages = async function () {
+        var messages = await getMessages();
+        $("#messages").html(JSON.stringify(messages));
+        console.log(messages);
       };
     </script>
   </body>
